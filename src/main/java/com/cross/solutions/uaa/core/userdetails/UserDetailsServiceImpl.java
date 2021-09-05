@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
  * @since 0.0.1-SNAPSHOT
  */
 @Slf4j
-@Service
+//@Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
   @Autowired private MessageSourceAccessor messages;

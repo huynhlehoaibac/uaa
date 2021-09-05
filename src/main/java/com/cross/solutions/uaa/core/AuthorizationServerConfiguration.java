@@ -55,13 +55,32 @@ public class AuthorizationServerConfiguration {
 
   @Bean
   public RegisteredClientRepository registeredClientRepository(JdbcTemplate jdbcTemplate) {
-    return new JdbcRegisteredClientRepository(jdbcTemplate);
+//    RegisteredClient simpleappClient =
+//        RegisteredClient.withId(UUID.randomUUID().toString())
+//            .clientId("simpleapp")
+//            .clientSecret("123456")
+//            .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_POST)
+//            .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+//            .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
+//            .redirectUri("http://127.0.0.1:8010/login/oauth2/code/simpleapp")
+//            .redirectUri("https://oidcdebugger.com/debug")
+//            .scope(OidcScopes.OPENID)
+//            .scope("cart")
+//            .build();
+
+    // Save registered client in db as if in-memory
+    JdbcRegisteredClientRepository registeredClientRepository =
+        new JdbcRegisteredClientRepository(jdbcTemplate);
+//    registeredClientRepository.save(simpleappClient);
+
+    return registeredClientRepository;
   }
 
   @Bean
   public OAuth2AuthorizationService authorizationService(
       JdbcTemplate jdbcTemplate, RegisteredClientRepository registeredClientRepository) {
     return new PostgreSQLOAuth2AuthorizationService(jdbcTemplate, registeredClientRepository);
+//    return new JdbcOAuth2AuthorizationService(jdbcTemplate, registeredClientRepository);
   }
 
   @Bean
@@ -96,6 +115,22 @@ public class AuthorizationServerConfiguration {
   public ProviderSettings providerSettings() {
     return ProviderSettings.builder().issuer("http://auth-server:9000").build();
   }
+
+//  @Bean
+//  public EmbeddedDatabase embeddedDatabase() {
+//    return new EmbeddedDatabaseBuilder()
+//        //        .generateUniqueName(true)
+//        .setType(EmbeddedDatabaseType.H2)
+//        .setName("testdb;DB_CLOSE_DELAY=-1")
+//        .setScriptEncoding("UTF-8")
+//        .addScript(
+//            "org/springframework/security/oauth2/server/authorization/oauth2-authorization-schema.sql")
+//        .addScript(
+//            "org/springframework/security/oauth2/server/authorization/oauth2-authorization-consent-schema.sql")
+//        .addScript(
+//            "org/springframework/security/oauth2/server/authorization/client/oauth2-registered-client-schema.sql")
+//        .build();
+//  }
 
   private static RSAKey generateRsa() throws NoSuchAlgorithmException {
     KeyPair keyPair = generateRsaKey();

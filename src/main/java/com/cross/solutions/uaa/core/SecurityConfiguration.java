@@ -4,6 +4,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 /**
@@ -26,4 +29,15 @@ public class SecurityConfiguration {
     http.headers().frameOptions().disable();
     return http.build();
   }
+
+//  @Bean
+//  public UserDetailsService users() {
+//    UserDetails user =
+//        org.springframework.security.core.userdetails.User.withDefaultPasswordEncoder()
+//            .username("user1")
+//            .password("password")
+//            .roles("user", "admin")
+//            .build();
+//    return new InMemoryUserDetailsManager(user);
+//  }
 }
