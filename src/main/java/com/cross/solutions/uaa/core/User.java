@@ -23,6 +23,8 @@ public class User implements java.io.Serializable {
   private long id;
   private String username;
   private String password;
+  private String firstname;
+  private String lastname;
   private String authorities;
 
   public User() {}
@@ -67,6 +69,24 @@ public class User implements java.io.Serializable {
 
   public void setPassword(String password) {
     this.password = password;
+  }
+
+  @Column(name = "firstname", length = 32)
+  public String getFirstname() {
+    return this.firstname;
+  }
+
+  public void setFirstname(String firstname) {
+    this.firstname = firstname;
+  }
+
+  @Column(name = "lastname", length = 32)
+  public String getLastname() {
+    return this.lastname;
+  }
+
+  public void setLastname(String lastname) {
+    this.lastname = lastname;
   }
 
   @Column(name = "authorities", nullable = false)
