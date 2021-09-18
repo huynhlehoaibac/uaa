@@ -1,5 +1,19 @@
 # Getting Started
 
+### Using cmd to generate private key and public key
+
+##### create private key in PEM format
+```console
+➜  openssl genrsa -out private.pem 2048
+
+➜  openssl rsa -in private.pem -pubout > public.pem
+```
+
+##### convert the private key in pkcs1 to pkcs8 so it can read by Java
+```console
+➜  openssl pkcs8 -topk8 -inform PEM -outform PEM -in private.pem -out private_p8.pem -nocrypt
+```
+
 ### Reference Documentation
 For further reference, please consider the following sections:
 
@@ -21,4 +35,3 @@ The following guides illustrate how to use some features concretely:
 * [Spring Boot and OAuth2](https://spring.io/guides/tutorials/spring-boot-oauth2/)
 * [Authenticating a User with LDAP](https://spring.io/guides/gs/authenticating-ldap/)
 * [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/)
-
