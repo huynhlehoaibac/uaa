@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.cross.solutions.uaa.core.AuthenticationUser;
 import com.cross.solutions.uaa.core.User;
 import com.cross.solutions.uaa.core.UserRepository;
 
@@ -41,7 +42,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
     List<GrantedAuthority> authorities =
         AuthorityUtils.commaSeparatedStringToAuthorityList(user.getAuthorities());
-    if (authorities.size() == 0) {
+    if (authorities.isEmpty()) {
       log.debug("User '" + username + "' has no authorities and will be treated as 'not found'");
       throw new UsernameNotFoundException(
           messages.getMessage(
@@ -50,7 +51,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
               "User {0} has no GrantedAuthority"));
     }
 
-    return new org.springframework.security.core.userdetails.User(
-        user.getUsername(), user.getPassword(), authorities);
+    return new AuthenticationUser(
+        user.getUsername(),
+        user.getPassword(),
+        user.getFirstname(),
+        user.getLastname(),
+        true,
+        true,
+        true,
+        true,
+        authorities);
   }
 }
