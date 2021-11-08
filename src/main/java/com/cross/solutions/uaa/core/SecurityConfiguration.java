@@ -22,6 +22,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   private static final String TOKEN_BASED_AUTHENTICATION_ENTRY_POINT = "/api/**";
   private static final String LOGIN_PROCESSING_URL = "/api/auth/login";
+  private static final String LOOKUP_URL = "/api/lookup/**";
 
   @Autowired private DefaultAuthenticationSuccessHandler defaultSuccessHandler;
   @Autowired private DefaultAuthenticationFailureHandler defaultFailureHandler;
@@ -41,7 +42,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .csrf(CsrfConfigurer::disable)
         .authorizeRequests(
-            ar -> ar.antMatchers(LOGIN_PROCESSING_URL).permitAll().anyRequest().authenticated())
+            ar -> {
+              ar.antMatchers(LOGIN_PROCESSING_URL).permitAll();
+              ar.antMatchers(LOOKUP_URL).permitAll();
+              ar.anyRequest().authenticated();
+            })
         .addFilterBefore(
             usernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
     //
