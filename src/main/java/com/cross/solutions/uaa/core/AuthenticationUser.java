@@ -3,7 +3,6 @@ package com.cross.solutions.uaa.core;
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 
 public class AuthenticationUser extends org.springframework.security.core.userdetails.User {
   private static final long serialVersionUID = 1L;
@@ -29,7 +28,7 @@ public class AuthenticationUser extends org.springframework.security.core.userde
         accountNonExpired,
         credentialsNonExpired,
         accountNonLocked,
-        AuthorityUtils.NO_AUTHORITIES);
+        authorities);
 
     this.firstname = firstname;
     this.lastname = lastname;
